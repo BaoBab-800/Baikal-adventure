@@ -1,0 +1,35 @@
+{
+    "activeFile": "assets/maps/ternovka.tmx",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "Все файлы (*)",
+    "fileStates": {
+        "assets/maps/ternovka.tmx": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2060.6666666666665,
+                "y": 2219.5
+            }
+        },
+        "assets/maps/ternovka.tmx#fence": {
+            "scaleInDock": 1
+        },
+        "assets/maps/ternovka.tmx#untitled": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "D:/Proj/Flutter/baikal_adventure/assets/tilesets/textures",
+    "map.height": 128,
+    "map.lastUsedFormat": "tmx",
+    "map.renderOrder": "3",
+    "map.width": 128,
+    "openFiles": [
+        "assets/maps/ternovka.tmx"
+    ],
+    "project": "baikal_adventure.tiled-project",
+    "recentFiles": [
+        "assets/maps/ternovka.tmx"
+    ],
+    "tileset.embedInMap": true
+}

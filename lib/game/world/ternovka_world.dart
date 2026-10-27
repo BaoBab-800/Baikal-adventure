@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
+
 import 'package:flame/components.dart';
+import 'package:flame_tiled/flame_tiled.dart';
 
 import '../characters/baikal.dart';
 import '../components/test_chest.dart';
-
 import 'locations/house_of_baikal.dart';
 
 class TernovkaWorld extends World {
   TernovkaWorld() {
     baikal = Baikal();
-    add(baikal);
   }
 
   late final Baikal baikal;
@@ -17,6 +16,13 @@ class TernovkaWorld extends World {
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
+    final map = await TiledComponent.load(
+      'ternovka.tmx',
+      Vector2.all(32),
+    );
+
+    add(map);
 
     add(
       HouseOfBaikal(
@@ -27,22 +33,6 @@ class TernovkaWorld extends World {
     add(
       TestChest(
         position: Vector2(100, 100),
-      ),
-    );
-
-    add(
-      RectangleComponent(
-        position: Vector2(-4000, 400),
-        size: Vector2(10000, 160),
-        paint: Paint()..color = const Color(0xFF707070),
-      ),
-    );
-
-    add(
-      RectangleComponent(
-        position: Vector2(-275, -1000),
-        size: Vector2(160, 10000),
-        paint: Paint()..color = const Color(0xFF707070),
       ),
     );
 
