@@ -2,6 +2,8 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../components/interactable.dart';
+
 import '../components/collidable.dart';
 
 class Baikal extends PositionComponent with KeyboardHandler {
@@ -18,6 +20,11 @@ class Baikal extends PositionComponent with KeyboardHandler {
     _keysPressed
       ..clear()
       ..addAll(keysPressed);
+
+    if (event is KeyDownEvent &&
+        event.logicalKey == LogicalKeyboardKey.keyE) {
+      _findNearestInteractable()?.interact();
+    }
 
     return true;
   }
@@ -113,5 +120,32 @@ class Baikal extends PositionComponent with KeyboardHandler {
     }
 
     return false;
+  }
+
+  Interactable? _findNearestInteractable() {
+    final world = findGame()!.world;
+
+    Interactable? nearest;
+    var nearestDistance = double.infinity;
+
+    void search(Component component) {
+      for (final child in component.children) {
+        if (child case final Interactable interactable) {
+          final distance = absolutePosition.distanceTo(
+            interactable.interactionPosition,
+          );
+
+          if (distance <= interactable.interactionRange && distance < nearestDistance) {
+            nearest = interactable;
+            nearestDistance = distance;
+          }
+        }
+
+        search(child);
+      }
+    }
+
+    search(world);
+    return nearest;
   }
 }

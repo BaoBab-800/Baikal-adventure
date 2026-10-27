@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flame/components.dart';
 
-import 'package:baikal_adventure/game/characters/baikal.dart';
+import '../characters/baikal.dart';
+import '../components/test_chest.dart';
 
 import 'locations/house_of_baikal.dart';
 
@@ -20,6 +21,12 @@ class TernovkaWorld extends World {
     add(
       HouseOfBaikal(
         position: Vector2(-105, -105),
+      ),
+    );
+
+    add(
+      TestChest(
+        position: Vector2(100, 100),
       ),
     );
 
