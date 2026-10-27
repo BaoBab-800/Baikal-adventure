@@ -2,6 +2,8 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:baikal_adventure/game/world/fence.dart';
+
 class Baikal extends PositionComponent with KeyboardHandler {
   Baikal() : super(
     position: Vector2.zero(),
@@ -47,7 +49,20 @@ class Baikal extends PositionComponent with KeyboardHandler {
     }
 
     if (direction.length > 0) {
-      position += direction.normalized() * speed * dt;
+      final delta = direction.normalized() * speed * dt;
+      final fences = parent!.children.query<Fence>();
+
+      final nextX = position + Vector2(delta.x, 0);
+
+      if (!_collidesAt(nextX, fences)) {
+        position.x = nextX.x;
+      }
+
+      final nextY = position + Vector2(0, delta.y);
+
+      if (!_collidesAt(nextY, fences)) {
+        position.y = nextY.y;
+      }
     }
 
     final visibleRect = findGame()!.camera.visibleWorldRect;
@@ -69,5 +84,27 @@ class Baikal extends PositionComponent with KeyboardHandler {
       size.toRect(),
       Paint()..color = Colors.lightBlue,
     );
+  }
+
+  bool _collidesAt(Vector2 candidate, Iterable<Fence> fences) {
+    final playerRect = Rect.fromLTWH(
+      candidate.x,
+      candidate.y,
+      size.x,
+      size.y,
+    );
+
+    for (final fence in fences) {
+      final fenceRect = Rect.fromLTWH(
+        fence.position.x,
+        fence.position.y,
+        fence.size.x,
+        fence.size.y,
+      );
+
+      if (playerRect.overlaps(fenceRect)) return true;
+    }
+
+    return false;
   }
 }
