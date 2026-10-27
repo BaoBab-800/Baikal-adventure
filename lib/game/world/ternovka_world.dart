@@ -3,7 +3,7 @@ import 'package:flame/components.dart';
 
 import 'package:baikal_adventure/game/characters/baikal.dart';
 
-import 'fence.dart';
+import 'locations/house_of_baikal.dart';
 
 class TernovkaWorld extends World {
   TernovkaWorld() {
@@ -18,10 +18,8 @@ class TernovkaWorld extends World {
     await super.onLoad();
 
     add(
-      RectangleComponent(
-        position: Vector2(-100, -100),
-        size: Vector2(250, 450),
-        paint: Paint()..color = const Color(0xFF496B42),
+      HouseOfBaikal(
+        position: Vector2(-105, -105),
       ),
     );
 
@@ -38,41 +36,6 @@ class TernovkaWorld extends World {
         position: Vector2(-275, -1000),
         size: Vector2(160, 10000),
         paint: Paint()..color = const Color(0xFF707070),
-      ),
-    );
-
-    add(
-      Fence(
-        position: Vector2(-105, -105),
-        size: Vector2(12, 460),
-      ),
-    );
-
-    add(
-      Fence(
-        position: Vector2(-105, -105),
-        size: Vector2(260, 12),
-      ),
-    );
-
-    add(
-      Fence(
-        position: Vector2(150, -105),
-        size: Vector2(12, 460),
-      ),
-    );
-
-    add(
-      Fence(
-        position: Vector2(-105, 350),
-        size: Vector2(90, 12),
-      ),
-    );
-
-    add(
-      Fence(
-        position: Vector2(40, 350),
-        size: Vector2(122, 12),
       ),
     );
 

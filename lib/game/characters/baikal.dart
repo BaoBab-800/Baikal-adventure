@@ -2,7 +2,7 @@ import 'package:flame/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:baikal_adventure/game/world/fence.dart';
+import '../components/collidable.dart';
 
 class Baikal extends PositionComponent with KeyboardHandler {
   Baikal() : super(
@@ -48,19 +48,21 @@ class Baikal extends PositionComponent with KeyboardHandler {
       direction.x += 1;
     }
 
+
     if (direction.length > 0) {
       final delta = direction.normalized() * speed * dt;
-      final fences = parent!.children.query<Fence>();
+      final world = findGame()!.world;
+      final collidables = _findCollidables(world).toList();
 
       final nextX = position + Vector2(delta.x, 0);
 
-      if (!_collidesAt(nextX, fences)) {
+      if (!_collidesAt(nextX, collidables)) {
         position.x = nextX.x;
       }
 
       final nextY = position + Vector2(0, delta.y);
 
-      if (!_collidesAt(nextY, fences)) {
+      if (!_collidesAt(nextY, collidables)) {
         position.y = nextY.y;
       }
     }
@@ -86,7 +88,17 @@ class Baikal extends PositionComponent with KeyboardHandler {
     );
   }
 
-  bool _collidesAt(Vector2 candidate, Iterable<Fence> fences) {
+  Iterable<Collidable> _findCollidables(Component component) sync* {
+    for (final child in component.children) {
+      if (child case final Collidable collidable) {
+        yield collidable;
+      }
+
+      yield* _findCollidables(child);
+    }
+  }
+
+  bool _collidesAt(Vector2 candidate, Iterable<Collidable> objects) {
     final playerRect = Rect.fromLTWH(
       candidate.x,
       candidate.y,
@@ -94,15 +106,10 @@ class Baikal extends PositionComponent with KeyboardHandler {
       size.y,
     );
 
-    for (final fence in fences) {
-      final fenceRect = Rect.fromLTWH(
-        fence.position.x,
-        fence.position.y,
-        fence.size.x,
-        fence.size.y,
-      );
-
-      if (playerRect.overlaps(fenceRect)) return true;
+    for (final object in objects) {
+      if (playerRect.overlaps(object.collisionRect)) {
+        return true;
+      }
     }
 
     return false;
