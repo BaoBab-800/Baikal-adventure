@@ -18,6 +18,9 @@ class TestChest extends RectangleComponent implements Interactable {
   Vector2 get interactionPosition => absolutePosition + size / 2;
 
   @override
+  String get interactionPrompt => 'Open chest';
+
+  @override
   void interact() {
     print('Baikal has enabled interaction!');
   }

@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/interactable.dart';
-
 import '../components/collidable.dart';
+import '../components/interaction_hint.dart';
 
 class Baikal extends PositionComponent with KeyboardHandler {
   Baikal() : super(
     position: Vector2.zero(),
     size: Vector2(32, 32),
-  );
+  ) {
+    add(_interactionHint);
+  }
 
   final double speed = 150;
   final Set<LogicalKeyboardKey> _keysPressed = {};
+  final InteractionHint _interactionHint = InteractionHint();
 
   @override
   bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
@@ -83,6 +86,8 @@ class Baikal extends PositionComponent with KeyboardHandler {
     position.y = position.y
         .clamp(visibleRect.top, visibleRect.bottom - size.y)
         .toDouble();
+
+    _updateInteractionHint();
   }
 
   @override
@@ -147,5 +152,21 @@ class Baikal extends PositionComponent with KeyboardHandler {
 
     search(world);
     return nearest;
+  }
+
+  void _updateInteractionHint() {
+    final target = _findNearestInteractable();
+
+    if (target == null) {
+      _interactionHint.text = '';
+      return;
+    }
+
+    _interactionHint.text = 'E – ${target.interactionPrompt}';
+
+    _interactionHint.position =
+        target.interactionPosition -
+            absolutePosition +
+            Vector2(0, -24);
   }
 }

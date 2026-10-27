@@ -5,5 +5,7 @@ abstract interface class Interactable {
 
   Vector2 get interactionPosition;
 
+  String get interactionPrompt;
+
   void interact();
 }
