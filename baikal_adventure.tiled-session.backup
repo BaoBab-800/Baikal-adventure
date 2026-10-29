@@ -4,15 +4,24 @@
     ],
     "file.lastUsedOpenFilter": "Все файлы (*)",
     "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
         "assets/maps/ternovka.tmx": {
-            "scale": 3,
-            "selectedLayer": 0,
+            "scale": 1,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 2060.6666666666665,
-                "y": 2219.5
+                "x": 2040,
+                "y": 2343.5
             }
         },
         "assets/maps/ternovka.tmx#fence": {
+            "scaleInDock": 1
+        },
+        "assets/maps/ternovka.tmx#gate": {
+            "scaleInDock": 1
+        },
+        "assets/maps/ternovka.tmx#grass": {
             "scaleInDock": 1
         },
         "assets/maps/ternovka.tmx#untitled": {

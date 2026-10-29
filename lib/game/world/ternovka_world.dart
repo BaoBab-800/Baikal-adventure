@@ -1,10 +1,8 @@
-
 import 'package:flame/components.dart';
 import 'package:flame_tiled/flame_tiled.dart';
 
 import '../characters/baikal.dart';
 import '../components/test_chest.dart';
-import 'locations/house_of_baikal.dart';
 
 class TernovkaWorld extends World {
   TernovkaWorld() {
@@ -20,15 +18,10 @@ class TernovkaWorld extends World {
     final map = await TiledComponent.load(
       'ternovka.tmx',
       Vector2.all(32),
+      prefix: 'assets/maps/',
     );
 
     add(map);
-
-    add(
-      HouseOfBaikal(
-        position: Vector2(-105, -105),
-      ),
-    );
 
     add(
       TestChest(

@@ -15,5 +15,6 @@ class BaikalAdventure extends FlameGame<TernovkaWorld> with HasKeyboardHandlerCo
     await super.onLoad();
 
     camera.follow(world.baikal);
+    camera.viewfinder.zoom = 1.6;
   }
 }
