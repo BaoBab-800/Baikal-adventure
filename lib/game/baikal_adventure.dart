@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'world/ternovka_world.dart';
 
-class BaikalAdventure extends FlameGame<TernovkaWorld> with HasKeyboardHandlerComponents {
+class BaikalAdventure extends FlameGame<TernovkaWorld> with HasKeyboardHandlerComponents, HasCollisionDetection {
   BaikalAdventure() : super(world: TernovkaWorld());
 
   @override

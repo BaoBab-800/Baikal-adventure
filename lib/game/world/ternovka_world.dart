@@ -4,6 +4,8 @@ import 'package:flame_tiled/flame_tiled.dart';
 import '../characters/baikal.dart';
 import '../components/test_chest.dart';
 
+import 'collision_loader.dart';
+
 class TernovkaWorld extends World {
   TernovkaWorld() {
     baikal = Baikal();
@@ -23,11 +25,9 @@ class TernovkaWorld extends World {
 
     add(map);
 
-    add(
-      TestChest(
-        position: Vector2(100, 100),
-      ),
-    );
+    CollisionLoader.load(map, this);
+
+    add(TestChest(position: Vector2(100, 100)));
 
     add(baikal);
   }
