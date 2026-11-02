@@ -8,7 +8,7 @@ import '../components/interactable.dart';
 import '../components/interaction_hint.dart';
 import '../components/collision_obstacle.dart';
 
-class Baikal extends PositionComponent with KeyboardHandler, CollisionCallbacks {
+class Baikal extends PositionComponent with KeyboardHandler {
   Baikal() : super(
     position: Vector2.zero(),
     size: Vector2(32, 32),
