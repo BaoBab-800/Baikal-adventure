@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
@@ -24,9 +26,61 @@ class Baikal extends PositionComponent with KeyboardHandler {
 
   late final RectangleHitbox _hitbox;
 
+  late final SpriteAnimationComponent _sprite;
+
+  late final SpriteAnimation _idleAnimation;
+  late final SpriteAnimation _walkDown;
+  late final SpriteAnimation _walkUp;
+  late final SpriteAnimation _walkLeft;
+  late final SpriteAnimation _walkRight;
+
+  String _currentAnimation = 'idle';
+
   @override
   Future<void> onLoad() async {
     await super.onLoad();
+
+    final idleImage = await findGame()!.images.load(
+      'characters/baikal/idle.jpg',
+    );
+
+    final walkDownImage = await findGame()!.images.load(
+      'characters/baikal/walk_down.png',
+    );
+
+    final walkUpImage = await findGame()!.images.load(
+      'characters/baikal/walk_up.jpg',
+    );
+
+    final walkLeftImage = await findGame()!.images.load(
+      'characters/baikal/walk_left.jpg',
+    );
+
+    final walkRightImage = await findGame()!.images.load(
+      'characters/baikal/walk_right.jpg',
+    );
+
+    _idleAnimation = SpriteAnimation.fromFrameData(
+      idleImage,
+      SpriteAnimationData.sequenced(
+        amount: 1,
+        stepTime: 1,
+        textureSize: Vector2(120, 240),
+      ),
+    );
+
+    _walkDown = _createAnimation(walkDownImage);
+    _walkUp = _createAnimation(walkUpImage);
+    _walkLeft = _createAnimation(walkLeftImage);
+    _walkRight = _createAnimation(walkRightImage);
+
+    _sprite = SpriteAnimationComponent(
+      animation: _idleAnimation,
+      position: Vector2(0, -32),
+      size: Vector2(34, 68),
+    );
+
+    add(_sprite);
 
     _hitbox = RectangleHitbox(
       position: Vector2(0, 0),
@@ -84,6 +138,8 @@ class Baikal extends PositionComponent with KeyboardHandler {
 
       _move(delta);
     }
+
+    _updateAnimation(direction);
     _updateInteractionHint();
   }
 
@@ -198,7 +254,45 @@ class Baikal extends PositionComponent with KeyboardHandler {
 
     if (target == null) return;
 
-    _interactionHint.position =
-        target.interactionPosition - absolutePosition + Vector2(0, -24);
+    _interactionHint.position = target.interactionPosition - absolutePosition + Vector2(0, -24);
+  }
+
+  SpriteAnimation _createAnimation(ui.Image image) {
+    return SpriteAnimation.fromFrameData(
+      image,
+      SpriteAnimationData.sequenced(
+        amount: 4,
+        stepTime: 0.15,
+        textureSize: Vector2(120, 240),
+      ),
+    );
+  }
+
+  void _updateAnimation(Vector2 direction) {
+    if (direction.isZero()) {
+      _setAnimation('idle', _idleAnimation);
+      return;
+    }
+
+    if (direction.x.abs() > direction.y.abs()) {
+      if (direction.x > 0) {
+        _setAnimation('walk_right', _walkRight);
+      } else {
+        _setAnimation('walk_left', _walkLeft);
+      }
+    } else {
+      if (direction.y > 0) {
+        _setAnimation('walk_down', _walkDown);
+      } else {
+        _setAnimation('walk_up', _walkUp);
+      }
+    }
+  }
+
+  void _setAnimation(String name, SpriteAnimation animation) {
+    if (_currentAnimation == name) return;
+
+    _currentAnimation = name;
+    _sprite.animation = animation;
   }
 }

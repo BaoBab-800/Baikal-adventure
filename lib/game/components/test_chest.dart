@@ -17,7 +17,7 @@ class TestChest extends SpriteComponent implements Interactable {
   }
 
   @override
-  double get interactionRange => 60;
+  double get interactionRange => 40;
 
   @override
   Vector2 get interactionPosition => absolutePosition + size / 2;
