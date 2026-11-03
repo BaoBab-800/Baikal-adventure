@@ -25,5 +25,7 @@ flutter:
   assets:
     - assets/maps/
     - assets/images/tilesets/
-    - assets/images/tilesets/textures/
+    - assets/images/tilesets/textures/grasses/
+    - assets/images/tilesets/textures/roads/
+    - assets/images/tilesets/textures/fences/
     - assets/images/test/
