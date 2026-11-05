@@ -3,7 +3,6 @@ import 'dart:ui' as ui;
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../components/interactable.dart';
@@ -18,7 +17,6 @@ class Baikal extends PositionComponent with KeyboardHandler {
     add(_interactionHint);
   }
 
-  final Paint _paint = Paint()..color = Colors.lightBlue;
   final double speed = 125;
   final Set<LogicalKeyboardKey> _keysPressed = {};
 
@@ -41,7 +39,7 @@ class Baikal extends PositionComponent with KeyboardHandler {
     await super.onLoad();
 
     final idleImage = await findGame()!.images.load(
-      'characters/baikal/idle.jpg',
+      'characters/baikal/idle.png',
     );
 
     final walkDownImage = await findGame()!.images.load(
@@ -49,15 +47,15 @@ class Baikal extends PositionComponent with KeyboardHandler {
     );
 
     final walkUpImage = await findGame()!.images.load(
-      'characters/baikal/walk_up.jpg',
+      'characters/baikal/walk_up.png',
     );
 
     final walkLeftImage = await findGame()!.images.load(
-      'characters/baikal/walk_left.jpg',
+      'characters/baikal/walk_left.png',
     );
 
     final walkRightImage = await findGame()!.images.load(
-      'characters/baikal/walk_right.jpg',
+      'characters/baikal/walk_right.png',
     );
 
     _idleAnimation = SpriteAnimation.fromFrameData(
@@ -65,7 +63,7 @@ class Baikal extends PositionComponent with KeyboardHandler {
       SpriteAnimationData.sequenced(
         amount: 1,
         stepTime: 1,
-        textureSize: Vector2(120, 240),
+        textureSize: Vector2(32, 64),
       ),
     );
 
@@ -77,7 +75,7 @@ class Baikal extends PositionComponent with KeyboardHandler {
     _sprite = SpriteAnimationComponent(
       animation: _idleAnimation,
       position: Vector2(0, -32),
-      size: Vector2(34, 68),
+      size: Vector2(32, 64),
     );
 
     add(_sprite);
@@ -141,13 +139,6 @@ class Baikal extends PositionComponent with KeyboardHandler {
 
     _updateAnimation(direction);
     _updateInteractionHint();
-  }
-
-  @override
-  void render(Canvas canvas) {
-    super.render(canvas);
-
-    canvas.drawRect(size.toRect(), _paint);
   }
 
   void _move(Vector2 delta) {
@@ -262,8 +253,8 @@ class Baikal extends PositionComponent with KeyboardHandler {
       image,
       SpriteAnimationData.sequenced(
         amount: 4,
-        stepTime: 0.15,
-        textureSize: Vector2(120, 240),
+        stepTime: 0.10,
+        textureSize: Vector2(33, 64),
       ),
     );
   }
