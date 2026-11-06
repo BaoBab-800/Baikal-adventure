@@ -13,6 +13,12 @@ class GameState {
    required this.gameStatus,
   });
 
+  static const GameState initialState = GameState(
+    gameMode: GameMode.exploration,
+    gameScreen: GameScreen.none,
+    gameStatus: GameStatus.running,
+  );
+
   GameState copyWith({
     GameMode? gameMode,
     GameScreen? gameScreen,
