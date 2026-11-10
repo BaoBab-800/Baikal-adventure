@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flame/game.dart';
 
-import 'data/game_session/game_session.dart';
+import '../session/game_session.dart';
 
 class GameSessionView extends StatefulWidget {
   const GameSessionView({super.key});
