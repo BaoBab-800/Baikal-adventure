@@ -3,5 +3,6 @@ enum GameScreen {
   inventory,
   map,
   journal,
+  combat,
   settings,
 }
