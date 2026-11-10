@@ -2,14 +2,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:baikal_adventure/game/baikal_adventure.dart';
 
-class GameSession {
-  late final ProviderContainer container;
-  late final BaikalAdventure game;
+final class GameSession {
+  ProviderContainer? _container;
+  BaikalAdventure? _game;
 
-  bool _isInitialized = false;
+  bool _isDisposed = false;
+
+  ProviderContainer get container => _container ?? _throwNotInitialized();
+  BaikalAdventure get game => _game ?? _throwNotInitialized();
+  bool get isInitialized => _container != null && _game != null;
 
   void initialize() {
-    if (_isInitialized) {
+    if (_isDisposed) {
+      throw StateError('GameSession has already been disposed.');
+    }
+
+    if (isInitialized) {
       throw StateError('GameSession is already initialized.');
     }
 
@@ -18,13 +26,26 @@ class GameSession {
     try {
       final game = BaikalAdventure();
 
-      this.container = container;
-      this.game = game;
-
-      _isInitialized = true;
+      _container = container;
+      _game = game;
     } catch (_) {
       container.dispose();
       rethrow;
     }
+  }
+
+  void dispose() {
+    if (_isDisposed) return;
+
+    _isDisposed = true;
+
+    _container?.dispose();
+
+    _container = null;
+    _game = null;
+  }
+
+  Never _throwNotInitialized() {
+    throw StateError('GameSession has not been initialized.');
   }
 }
