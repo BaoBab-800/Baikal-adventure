@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:baikal_adventure/actions/game_action.dart';
+import '/data/actions/game_action.dart';
 
 import 'game_state.dart';
 import 'game_mode.dart';
@@ -17,14 +17,14 @@ class GameStateController extends Notifier<GameState> {
 
   void dispatch(GameAction action) {
     switch (action) {
-      case StartBattle():
+      case StartCombat():
         state = state.copyWith(
           gameMode: GameMode.combat,
           gameScreen: GameScreen.combat,
           gameStatus: GameStatus.running,
         );
 
-      case FinishBattle():
+      case FinishCombat():
         state = state.copyWith(
           gameMode: GameMode.exploration,
           gameScreen: GameScreen.map,
