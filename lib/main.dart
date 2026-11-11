@@ -1,16 +1,13 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
-import 'game/baikal_adventure.dart';
+import 'presentation/game_session_view.dart';
 
 void main() {
   runApp(
     const MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: GameWidget.controlled(
-          gameFactory: BaikalAdventure.new,
-        ),
+        body: GameSessionView(),
       ),
     ),
   );

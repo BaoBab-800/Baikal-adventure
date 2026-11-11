@@ -1,5 +1,7 @@
 import 'package:flame/components.dart';
 
+import 'package:baikal_adventure/game/baikal_adventure.dart';
+
 import 'interactable.dart';
 
 class TestChest extends SpriteComponent implements Interactable {
@@ -8,6 +10,8 @@ class TestChest extends SpriteComponent implements Interactable {
   }) : super(
     size: Vector2(18, 18),
   );
+
+  BaikalAdventure get game => findGame() as BaikalAdventure;
 
   @override
   Future<void> onLoad() async {
@@ -27,6 +31,7 @@ class TestChest extends SpriteComponent implements Interactable {
 
   @override
   void interact() {
-    print('Baikal has enabled interaction!');
+    game.gameStateAccess.startCombat();
+    print(game.gameStateAccess.state.gameMode);
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:baikal_adventure/game/baikal_adventure.dart';
+import '/game/baikal_adventure.dart';
+
+import 'riverpod_game_state_access.dart';
 
 final class GameSession {
   ProviderContainer? _container;
@@ -24,7 +26,11 @@ final class GameSession {
     final container = ProviderContainer();
 
     try {
-      final game = BaikalAdventure();
+      final gameStateAccess = RiverpodGameStateAccess(container);
+
+      final game = BaikalAdventure(
+        gameStateAccess: gameStateAccess,
+      );
 
       _container = container;
       _game = game;
